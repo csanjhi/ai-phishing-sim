@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  gophish:
+    image: gophish/gophish:latest
+    container_name: gophish
+    ports:
+      - "3333:3333"   # admin UI / API (HTTPS)
+      - "8080:80"     # phishing landing-page server
+    volumes:
+      - gophish-data:/opt/gophish/data
+      - ./gophish-config/config.json:/opt/gophish/config.json:ro
+    restart: unless-stopped
+
+  ai-service:
+    build: ./ai-service
+    container_name: ai-service
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=sqlite:////data/phishing_sim.db
+      - GOPHISH_BASE_URL=https://gophish:3333
+    volumes:
+      - ai-service-data:/data
+    ports:
+      - "8000:8000"
+    depends_on:
+      - gophish
+    restart: unless-stopped
+
+volumes:
+  gophish-data:
+  ai-service-data:

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Analytics — AI Phishing Simulation</title>
+  <link rel="stylesheet" href="/dashboard/static/style.css">
+</head>
+<body>
+  <nav>
+    <h1>🎣 AI Phishing Simulation Platform</h1>
+    <div><a href="/">Dashboard</a> | <a href="/analytics-view">Analytics</a></div>
+  </nav>
+
+  <main>
+    <section class="card">
+      <h2>Click-rate by Department</h2>
+      <table id="summary-table"><thead><tr>
+        <th>Department</th><th>Sent</th><th>Opened</th><th>Clicked</th><th>Submitted Data</th><th>Click Rate %</th>
+      </tr></thead><tbody></tbody></table>
+      <a href="/analytics/export">Export CSV</a>
+    </section>
+
+    <section class="card">
+      <h2>Automated Insights</h2>
+      <ul id="insights-list"></ul>
+    </section>
+  </main>
+
+  <script>
+    async function load() {
+      const summary = await (await fetch('/analytics/summary')).json();
+      const tbody = document.querySelector('#summary-table tbody');
+      tbody.innerHTML = summary.map(r => `<tr>
+        <td>${r.department}</td><td>${r.sent}</td><td>${r.opened}</td>
+        <td>${r.clicked}</td><td>${r.submitted_data}</td><td>${r.click_rate_pct}%</td>
+      </tr>`).join('');
+
+      const insights = await (await fetch('/analytics/insights')).json();
+      document.querySelector('#insights-list').innerHTML =
+        insights.insights.map(i => `<li>${i}</li>`).join('');
+    }
+    load();
+  </script>
+</body>
+</html>

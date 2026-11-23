@@ -1,0 +1,13 @@
+.env
+*.key
+*.crt
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+*.db
+*.sqlite3
+data/
+.vscode/
+.idea/

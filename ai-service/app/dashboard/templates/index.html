@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Phishing Simulation — Dashboard</title>
+  <link rel="stylesheet" href="/dashboard/static/style.css">
+</head>
+<body>
+  <nav>
+    <h1>🎣 AI Phishing Simulation Platform</h1>
+    <div><a href="/">Dashboard</a> | <a href="/analytics-view">Analytics</a></div>
+  </nav>
+
+  <main>
+    <section class="card">
+      <h2>1. Generate an AI Template</h2>
+      <form id="tmpl-form">
+        <label>Target role <input name="target_role" value="Finance Analyst" required></label>
+        <label>Department <input name="department" value="Finance" required></label>
+        <label>Seniority
+          <select name="seniority">
+            <option>junior</option><option selected>mid</option><option>senior</option><option>exec</option>
+          </select>
+        </label>
+        <label>Difficulty
+          <select name="difficulty_level">
+            <option>easy</option><option selected>medium</option><option>hard</option>
+          </select>
+        </label>
+        <label>Company context <input name="company_context" value="a mid-size fintech company"></label>
+        <label><input type="checkbox" name="push_to_gophish"> Push to Gophish (requires GOPHISH_API_KEY)</label>
+        <button type="submit">Generate Template</button>
+      </form>
+      <pre id="tmpl-result"></pre>
+    </section>
+
+    <section class="card">
+      <h2>2. Templates</h2>
+      <table id="tmpl-table"><thead><tr>
+        <th>Name</th><th>Subject</th><th>Dept</th><th>Difficulty</th><th>Model</th><th></th>
+      </tr></thead><tbody></tbody></table>
+    </section>
+
+    <section class="card">
+      <h2>3. Campaigns</h2>
+      <form id="camp-form">
+        <label>Name <input name="name" value="Q1 Finance Awareness Test" required></label>
+        <label>Department <input name="department" value="Finance" required></label>
+        <label>Template ID <input name="template_id" placeholder="paste template id from above" required></label>
+        <button type="submit">Create Campaign</button>
+      </form>
+      <table id="camp-table"><thead><tr>
+        <th>Name</th><th>Status</th><th>Approved By</th><th>Actions</th>
+      </tr></thead><tbody></tbody></table>
+    </section>
+
+    <section class="card">
+      <h2>4. Simulate a click (demo analytics data)</h2>
+      <form id="event-form">
+        <label>Campaign ID <input name="campaign_id" required></label>
+        <label>Target email <input name="target_email" value="demo.user@example.com" required></label>
+        <label>Department <input name="department" value="Finance" required></label>
+        <label>Event
+          <select name="event_type">
+            <option>sent</option><option>opened</option><option selected>clicked</option><option>submitted_data</option>
+          </select>
+        </label>
+        <button type="submit">Record Event</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="/dashboard/static/app.js"></script>
+</body>
+</html>
